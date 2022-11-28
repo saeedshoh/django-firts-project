@@ -1,0 +1,21 @@
+{% extends 'base.html' %} 
+{% block sidebar %}
+  {% include 'inc/_sidebar.html' %}
+{% endblock %}
+{% block content %}
+  <div class="card mb-3">
+    <div class="card-header">
+      Категория:
+      <a href="{%  url 'category_show' news.category.id %}"
+        >{{ news.category.title }}</a
+      >
+    </div>
+    <div class="card-body d-flex">
+      <div>
+        <h5 class="card-title">{{ news.title }}</h5>
+        <p class="card-text">{{ news.content }}</p>
+      </div>
+    </div>
+    <div class="card-footer text-muted">{{ news.created_at }}</div>
+  </div>
+{% endblock %}
