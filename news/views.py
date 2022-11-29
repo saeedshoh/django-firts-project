@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from .forms import NewsForm
-from django.views.generic import ListView
+from django.views.generic import ListView, DeleteView
 
 from .models import *
 
@@ -28,7 +28,15 @@ class NewsBycategory(ListView):
     
     def get_queryset(self):
         return News.objects.filter(is_published=True, category_id=self.kwargs['category_id'])
-    
+
+
+
+class GetPostView(DeleteView):
+    model = News
+    template_name=  'news/show.html'
+    pk_url_kwarg =  'news_id'
+
+
 def get_post(request, post_id):
     news = News.objects.get(pk = post_id)    
     return render(request, 'news/show.html', {
