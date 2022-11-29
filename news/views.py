@@ -1,5 +1,6 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from .forms import NewsForm
 
 from .models import *
 
@@ -27,4 +28,15 @@ def get_post(request, post_id):
     return render(request, 'news/show.html', {
         'news': news,
     })
+
+
+def add_news(request):
+    if request.method == 'POST':
+        form = NewsForm(request.POST)
+        if form.is_valid():
+            News.objects.create(**form.cleaned_data)
+            return redirect('home')
+    else:
+        form = NewsForm()
+    return render(request, 'news/create.html', {'form' : form})
     
