@@ -34,7 +34,7 @@ def add_news(request):
     if request.method == 'POST':
         form = NewsForm(request.POST)
         if form.is_valid():
-            News.objects.create(**form.cleaned_data)
+            form.save()
             return redirect('home')
     else:
         form = NewsForm()
