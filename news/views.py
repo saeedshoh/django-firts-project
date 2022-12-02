@@ -1,5 +1,7 @@
-from django.http import HttpResponse
+import json
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
+from django.views import View
 from .forms import NewsForm
 from django.views.generic import ListView, DeleteView
 
@@ -53,4 +55,11 @@ def add_news(request):
     else:
         form = NewsForm()
     return render(request, 'news/create.html', {'form' : form})
+
+class TestBaseView(View):
+
+    def get(self, request):
+        query = News.objects.all().values()
+        print(query)
+        return JsonResponse({"key1": list(query)})
     
