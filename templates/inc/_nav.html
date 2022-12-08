@@ -19,10 +19,22 @@
                     >Главная</a
                     >
                 </li>
+                {% if request.user.is_authenticated %}
                 <li class="nav-item">
                     <a class="nav-link" href="{%  url 'news.create' %}">Добавить новость</a>
                 </li>
+                {% else %}
+                {% endif %}
+               
             </ul>
+
+            <span class="navbar-text">
+                {% if request.user.is_authenticated %}
+                    Добро пожаловать {{ user.username }} | <a href="{%  url 'logout' %}">Выход</a>
+                 {% else %}
+                  <a href="{%  url 'register' %}">Регистрация</a> | <a href="{%  url 'login' %}">Авторизация</a>
+                {% endif %}
+            </span>
         </div>
     </div>
 </nav>

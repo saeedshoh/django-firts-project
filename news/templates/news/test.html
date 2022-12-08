@@ -1,0 +1,8 @@
+{% extends 'base.html' %} {% block sidebar %} {% include 'inc/_sidebar.html' %}
+{% endblock %} {% block content %}
+<div class="card mb-3 p-3">
+  <h1>Тестовая страница</h1>
+  {% for contact in page_obj %} {{ contact }}<br />
+ {% endfor %}
+</div>
+{% endblock %}
