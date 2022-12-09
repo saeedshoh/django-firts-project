@@ -5,13 +5,18 @@ from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 
+class ContactForm(forms.Form):
+     subject = forms.CharField(label="Тема", widget=forms.TextInput(
+        attrs={'class': 'form-control'}))
+     
+     content = forms.CharField(label="Тема писмо", widget=forms.Textarea(
+        attrs={'class': 'form-control', 'rows' : 5}))
 
 class UserLoginForm(AuthenticationForm):
     username = forms.CharField(label="Имя пользователя", widget=forms.TextInput(
         attrs={'class': 'form-control'}))
     password = forms.CharField(
         label="Пароль", widget=forms.PasswordInput(attrs={'class': 'form-control'}))
-
 
 class RegisterForm(UserCreationForm):
     username = forms.CharField(label="Имя пользователя", widget=forms.TextInput(
@@ -27,7 +32,6 @@ class RegisterForm(UserCreationForm):
         model = User
         fields = ('username', 'email', 'password1', 'password2')
 
-
 class NewsForm(forms.ModelForm):
 
     class Meta:
@@ -38,7 +42,6 @@ class NewsForm(forms.ModelForm):
             'content': forms.Textarea(attrs={'class': 'form-control', 'rows': 5}),
             'category': forms.Select(attrs={'class': 'form-control'}),
         }
-
 
 def clean_title(self):
     title = self.cleaned_data['title']

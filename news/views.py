@@ -2,11 +2,12 @@ import json
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 from django.views import View
-from .forms import NewsForm, RegisterForm, UserLoginForm
+from .forms import NewsForm, RegisterForm, UserLoginForm, ContactForm
 from django.views.generic import ListView, DeleteView
 from django.core.paginator import Paginator
 from django.contrib import messages
 from django.contrib.auth import login, logout
+from django.core.mail import send_mail
 
 from .models import *
 
@@ -20,7 +21,6 @@ def register(request):
             return redirect('login')
         else:
             messages.error(request, 'Ошибка авторзицация')
-
     else:
         form = RegisterForm()
     return render(request, 'news/register.html', {'form': form})
@@ -46,12 +46,20 @@ def user_login(request):
 
 
 def test(request):
-    objects = ['item1', 'item2', 'item3', 'item4',
-               'item5', 'item6', 'item7', 'item8', ]
-    paginator = Paginator(objects, 2)
-    page_num = request.GET.get('page', 1)
-    page_objects = paginator.get_page(page_num)
-    return render(request, 'news/test.html', {'page_obj': page_objects})
+     if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            mail = send_mail(form.cleaned_data['subject'], form.cleaned_data['content'], 'bsaeedshoh@gmail.com', ['saeedshoh@gmail.com', 'saeedshoh@mail.ru'])
+            if mail:
+                messages.success(request, 'Писмо отправлено!')
+                return redirect('test')
+            else:
+                messages.error(request, 'Ошибка отправки!')
+        else:
+            messages.error(request, 'Ошибка авторзицация')
+     else:
+        form = ContactForm()
+     return render(request, 'news/test.html', {'form': form})
 
 
 class HomeNews(ListView):
