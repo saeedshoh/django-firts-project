@@ -145,3 +145,4 @@ EMAIL_HOST_USER = 'bsaeedshoh@gmail.com'
 EMAIL_HOST_PASSWORD = 'pjrqyfftezgpbhcw'
 EMAIL_USE_SSL = True
 EMAIL_USE_TLS = False
+
